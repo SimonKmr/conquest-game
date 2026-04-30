@@ -1,26 +1,15 @@
 import asyncio
 import websockets
 import json
+from bot_engine import BotEngine
+
+
 
 class Settings:
     def __init__(self):
         self.uri = "ws://localhost:8080/player"
         self.id = 1
         self.password = "hello"
-
-class Update:
-    def __init__(self,id, x, y):
-        self.id = id
-        self.x = x
-        self.y = y
-
-class BotEngine:
-    def reason(self, updates, settings):
-        x = 126
-        y = 77
-        obj = {"Id": settings.id, "X": x, "Y": y}
-        return obj
-
 
 async def client():
     settings = Settings()
