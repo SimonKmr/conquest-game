@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Board struct {
 	fields [][]int
@@ -27,11 +29,17 @@ func (b *Board) UpdateField(x, y, id int) {
 }
 
 func (b *Board) UpdateBoard(moves []BoardUpdate) {
+
 	for i := range moves {
 		m := moves[i]
 		fmt.Println("Update Field")
 		b.UpdateField(m.X, m.Y, m.Id)
+	}
+}
 
+func (b *Board) UpdateTerritory(moves []BoardUpdate) {
+	for i := range moves {
+		m := moves[i]
 		fmt.Println("Fill Surrounded Areas")
 		b.FillSurroundedAreas(m)
 	}
@@ -65,36 +73,26 @@ func (b *Board) FillSurroundedAreas(move BoardUpdate) {
 	left := []int{x - 1, y}
 	right := []int{x + 1, y}
 
-	if adjacent_player_tiles >= 2 {
-		fmt.Println("Playertiles >= 2")
-		fmt.Println("Check Below")
-		below_hit_other_players, below_area := b.floodFill(below[0], below[1], id)
-		if !below_hit_other_players {
-			fmt.Println("Apply Below")
-			b.ApplyFill(below_area, id)
-		}
-
-		fmt.Println("Check Above")
-		above_hit_other_players, above_area := b.floodFill(above[0], above[1], id)
-		if !above_hit_other_players {
-			fmt.Println("Apply Above")
-			b.ApplyFill(above_area, id)
-		}
-
-		fmt.Println("Check Left")
-		left_hit_other_players, left_area := b.floodFill(left[0], left[1], id)
-		if !left_hit_other_players {
-			fmt.Println("Apply Left")
-			b.ApplyFill(left_area, id)
-		}
-
-		fmt.Println("Check Right")
-		right_hit_other_players, right_area := b.floodFill(right[0], right[1], id)
-		if !right_hit_other_players {
-			fmt.Println("Apply Right")
-			b.ApplyFill(right_area, id)
-		}
+	below_hit_other_players, below_area := b.floodFill(below[0], below[1], id)
+	if !below_hit_other_players {
+		b.ApplyFill(below_area, id)
 	}
+
+	above_hit_other_players, above_area := b.floodFill(above[0], above[1], id)
+	if !above_hit_other_players {
+		b.ApplyFill(above_area, id)
+	}
+
+	left_hit_other_players, left_area := b.floodFill(left[0], left[1], id)
+	if !left_hit_other_players {
+		b.ApplyFill(left_area, id)
+	}
+
+	right_hit_other_players, right_area := b.floodFill(right[0], right[1], id)
+	if !right_hit_other_players {
+		b.ApplyFill(right_area, id)
+	}
+
 }
 
 func (b *Board) ApplyFill(fill [][]bool, value int) {

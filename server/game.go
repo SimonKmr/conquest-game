@@ -96,6 +96,9 @@ func (g *Game) PlayRound() {
 	fmt.Println("Apply Changes to Board")
 	g.Board.UpdateBoard(valid_moves)
 
+	// Fill Surrounded Areas
+	g.Board.UpdateTerritory(valid_moves)
+
 	// Save board
 	fmt.Println("Save Changes to Png")
 	path := fmt.Sprintf("%s/%010d.png", g.folder, g.Round)
@@ -142,6 +145,13 @@ func (g *Game) updatePlayers(moves []BoardUpdate) {
 
 func (g *Game) validateMoves(moves []BoardUpdate) []BoardUpdate {
 	b := g.Board
+
+	// shuffle the order of the moves
+	// makes the game less predictable when two players claim the same field
+	rand.Shuffle(len(moves), func(i, j int) {
+		moves[i], moves[j] = moves[j], moves[i]
+	})
+
 	claimed := make(map[[2]int]bool)
 	valid_moves := make([]BoardUpdate, len(moves))
 	count := 0
@@ -166,7 +176,7 @@ func (g *Game) validateMoves(moves []BoardUpdate) []BoardUpdate {
 			continue
 		}
 
-		// if two players claim the same tile, neither gets it
+		// if field has been claimed in a previous turn, ignore this claim
 		pos := [2]int{x, y}
 		if claimed[pos] {
 			continue
@@ -187,11 +197,13 @@ func (g *Game) getMoves() []BoardUpdate {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
-			moves[i] = g.players[i].receiveTurn()
-			moves[i].Id = g.players[i].Id
+			p := g.players[i]
+			moves[i] = p.receiveTurn()
+			moves[i].Id = p.Id
 			fmt.Println(moves[i])
 		}(i)
 	}
+
 	wg.Wait()
 	return moves
 }

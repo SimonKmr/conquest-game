@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "bFzWCwuTgzk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Simon\\source\\repos\\conquest-game\\client-cs\\client-cs.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Simon\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\websocketsharp\\1.0.3-rc11\\websocketsharp.1.0.3-rc11.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.300\\microsoft.net.sdk.compilers.toolset.9.0.300.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Das Paket \"WebSocketSharp 1.0.3-rc11\" wurde nicht mit dem Projektzielframework \"net9.0\", sondern mit \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" wiederhergestellt. Dieses Paket ist mit Ihrem Projekt möglicherweise nicht vollständig kompatibel.",
+      "libraryId": "WebSocketSharp",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
+}

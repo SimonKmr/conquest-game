@@ -91,6 +91,7 @@ func VerifyPlayer(c *websocket.Conn) *Player {
 		return nil
 	}
 
+	fmt.Printf("Player: %d joined!\n", player.Id)
 	return player
 }
 
